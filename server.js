@@ -7,24 +7,14 @@ const cors = require('cors');
 //Inställningar för express
 const app = express();
 const port = process.env.PORT;
-const password = process.env.PASSWORD;
 const authRoutes = require("./routes/authroutes");
 
 //stöd för ta json-format och 
 app.use(express.json());
 app.use(cors());
 
-//Lägger till mongoose
-const mongoose = require('mongoose');
-const { type } = require('express/lib/response');
 
-//Ansluter till mongoDB.
-mongoose.connect(`mongodb+srv://markusv:${password}@clusterfirst.ageoa7j.mongodb.net/?retryWrites=true&w=majority&appName=ClusterFirst`).then(() => {
-    console.log("Connected to MongoDB");
-}).catch((error) => {
-    console.log("Error connecting to database: " + error);
-})
-
+/*
 // Skapa ett db-schema
 const WorkSchema = mongoose.Schema({
     companyName: {
@@ -56,10 +46,10 @@ const WorkSchema = mongoose.Schema({
 
 // Skapa en model
 const WorkExperience = mongoose.model('Work_experience', WorkSchema);
-
+*/
 //Välkomst meddelande om webbadress/api anropas
 app.use('/api', authRoutes);
-
+/*
 //hämtar data från en mongoDb server och skickar med det som svart i fetch förfrågan om webbadress/api/cv anropas. Skickar felmeddelande om fel uppstår hos databasen.
 app.get('/api/cv', async (req, res) => {
     try {
@@ -168,7 +158,7 @@ app.delete('/api/delete/:id', async(req, res) => {
             return res.status(500).json({ error: "Database error. " + error });
         }
     }
-});
+});*/
 
 //Startar servern
 app.listen(port, () => {

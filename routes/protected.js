@@ -21,6 +21,7 @@ router.post("/add", authtenticateToken, async (req, res) => {
     //lägger till data till mongoDb servern med krav att schema workSchema ska följas från post-anropet om webbadress/api/add anropas. Skickar felmeddelande om fel uppstår hos databasen.
     
         let workExperience1 = {
+            username: req.body.username,
             companyName: req.body.companyName,
             jobTitle: req.body.jobTitle,
             location: req.body.location,
@@ -32,7 +33,7 @@ router.post("/add", authtenticateToken, async (req, res) => {
         let error = {};
     
         //Felhantering om uppgifter saknas
-        if (!workExperience1.companyName || !workExperience1.jobTitle || !workExperience1.location || !workExperience1.startDate || !workExperience1.endDate || !workExperience1.description) {
+        if (!workExperience1.username || !workExperience1.companyName || !workExperience1.jobTitle || !workExperience1.location || !workExperience1.startDate || !workExperience1.endDate || !workExperience1.description) {
             error = {
                 message: "Parameters missing in the request.",
                 detail: "Post request most include companyName, jobTitle, location, startDate, endDate and description",
@@ -56,7 +57,7 @@ router.post("/add", authtenticateToken, async (req, res) => {
 
 router.get("/cv", authtenticateToken, async (req, res) => {
         try {
-            let result = await WorkExperience.find();
+            let result = await WorkExperience.find({ username: req.username.username});
             return res.json(result);
     
         } catch (error) {

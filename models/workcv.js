@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 // Skapa ett db-schema
 const WorkSchema = mongoose.Schema({
+    username: {
+        type: String,
+        required: true
+    },
     companyName: {
         type: String,
         required: true

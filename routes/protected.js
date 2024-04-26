@@ -55,6 +55,10 @@ router.post("/add", authtenticateToken, async (req, res) => {
         }
 });
 
+router.get("/", authtenticateToken, async (req, res) => {
+    res.status(200).json({ message: "Access granted"});
+});
+
 router.get("/cv", authtenticateToken, async (req, res) => {
         try {
             let result = await WorkExperience.find({ username: req.username.username});
@@ -94,7 +98,7 @@ function authtenticateToken(req, res, next) {
 
     jwt.verify(token, process.env.JWT_SECRET_KEY, (err, username) => {
         if(err) {
-            return res.status(403).json({ mesage: "Not authorized: Wrong token."})
+            return res.status(403).json({ message: "Not authorized: Wrong token."})
         }
 
         req.username = username;

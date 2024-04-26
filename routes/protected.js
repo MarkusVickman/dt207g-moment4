@@ -85,10 +85,10 @@ router.delete("/delete/:id", authtenticateToken, async (req, res) => {
 
 function authtenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
-    const token = /*authHeader && */authHeader.split(' ')[1];
+    const token = authHeader && authHeader.split(' ')[1];
 
-    if(token == null) {
-        res.status(401).json({ message: "Not authorized: Token is missing."});
+    if(token == null || token.lenght === 0) {
+        return res.status(401).json({ message: "Not authorized: Token is missing."});
     }
 
     jwt.verify(token, process.env.JWT_SECRET_KEY, (err, username) => {

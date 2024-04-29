@@ -27,3 +27,7 @@ app.use("/api/protected", protected);
 app.listen(port, () => {
     console.log('Server is running on port: ' + port);
 });
+
+router.get("/check", (req, res) => {
+    res.status(200).json({ message: "Api-server is up and running."});
+});

@@ -10,7 +10,7 @@ const { type } = require('express/lib/response');
 mongoose.connect(process.env.DATABASE).then(() => {
     console.log("Connected to MongoDB");
 }).catch((error) => {
-    console.log("Error connecting to database: " + error);
+    console.log("Error connecting to database: " + error); 
 })
 
 const User = require("../models/user");

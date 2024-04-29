@@ -22,7 +22,7 @@ router.post("/add", authtenticateToken, async (req, res) => {
     //lägger till data till mongoDb servern med krav att schema workSchema ska följas från post-anropet om webbadress/api/add anropas. Skickar felmeddelande om fel uppstår hos databasen.
     
         let workExperience1 = {
-            username: req.body.username.username,
+            username: req.username.username,
             companyName: req.body.companyName,
             jobTitle: req.body.jobTitle,
             location: req.body.location,

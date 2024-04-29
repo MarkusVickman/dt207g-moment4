@@ -22,7 +22,7 @@ router.post("/add", authtenticateToken, async (req, res) => {
     //lägger till data till mongoDb servern med krav att schema workSchema ska följas från post-anropet om webbadress/api/add anropas. Skickar felmeddelande om fel uppstår hos databasen.
     
         let workExperience1 = {
-            username: req.body.username,
+            username: req.body.username.username,
             companyName: req.body.companyName,
             jobTitle: req.body.jobTitle,
             location: req.body.location,
@@ -100,7 +100,8 @@ router.delete("/user/delete", authtenticateToken, async (req, res) => {
         //värdet skrivs in på rätt index i rätt kolomn i databasen.
         else {
             try {
-                await User.findByIdAndDelete(indexId);
+                await User.deleteOne({ username: indexId });
+                await WorkExperience.deleteMany({ username: indexId });
                 return res.json({ Success: "Delete data removed from database." });
             } catch (error) {
                 return res.status(500).json({ error: "Database error. " + error });

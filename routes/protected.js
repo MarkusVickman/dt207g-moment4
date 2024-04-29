@@ -14,6 +14,7 @@ mongoose.connect(process.env.DATABASE).then(() => {
 })
 
 const WorkExperience = require("../models/workcv");
+const User = require("../models/user");
 
 router.post("/add", authtenticateToken, async (req, res) => {
 
@@ -87,6 +88,37 @@ router.delete("/delete/:id", authtenticateToken, async (req, res) => {
         }
     }
 });
+
+router.delete("/user/delete", authtenticateToken, async (req, res) => {
+    //tar bort data från mongoDb-servern när förfrågan till webbadress/api/cv görs. Skickar felmeddelande om fel uppstår hos databasen.
+        let indexId = req.username.username;
+    
+        //Felhantering om uppgifter saknas.
+        if (!indexId) {
+            res.status(400).json(error);
+        }
+        //värdet skrivs in på rätt index i rätt kolomn i databasen.
+        else {
+            try {
+                await User.findByIdAndDelete(indexId);
+                return res.json({ Success: "Delete data removed from database." });
+            } catch (error) {
+                return res.status(500).json({ error: "Database error. " + error });
+            }
+        }
+    });
+
+    router.get("/user", authtenticateToken, async (req, res) => {
+        try {
+            let result = await User.find({ username: req.username.username});
+            return res.json(result);
+    
+        } catch (error) {
+            return res.status(500).json({ error: "Could not reach database. " + error });
+        }
+});
+
+
 
 function authtenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];

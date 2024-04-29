@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    created: {
+        type: Date,
+        default: Date.now
     }
 });
 
@@ -29,16 +33,7 @@ userSchema.pre("save", async function (next) {
         next(error);
     }
 });
-/*
-userSchema.statics.register = async function (username, password) {
-    try {
-        const user = new this({ username, password });
-        await user.save();
-        return user;
-    } catch (error) {
-        throw error;
-    }
-};*/
+
 
 userSchema.methods.comparePassword = async function (password) {
     try {
@@ -47,26 +42,6 @@ userSchema.methods.comparePassword = async function (password) {
         throw error;
     }
 };
-/*
-userSchema.statics.login = async function (username, password) {
-    try {
-        const user = await this.findOne({ username });
-        if (!user) {
-            throw new Error("Incorrect username, password or both");
-        }
-
-        const isPasswordAMatch = await user.comparePassword(password);
-
-        if (!isPasswordAMatch) {
-            throw new Error("Incorrect username, password or both");
-        }
-
-        return user;
-    } catch(error) {
-        throw error;
-    }
-
-}*/
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;

@@ -24,7 +24,7 @@ router.post("/register", async (req, res) => {
         else if (password.length < 6) {
             return res.status(400).json({ error: "Invalid input, password must be atleast 6 characters long." });
         }
-        const user = new User({ username, password, created });
+        const user = new User({ username, password });
         await user.save();
         res.status(201).json({ messege: "User created" });
 

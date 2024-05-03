@@ -13,8 +13,10 @@ mongoose.connect(process.env.DATABASE).then(() => {
     console.log("Error connecting to database: " + error); 
 })
 
+//Hämtar metoder och mongooseschema för inloggning och registrering
 const User = require("../models/user");
 
+//routes för registrering av användare som lagrar användaren i databasen med hjälp av metoden för new User
 router.post("/register", async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -33,6 +35,7 @@ router.post("/register", async (req, res) => {
     }
 });
 
+//routes för login av användare som lagrar användarnamn som payload i JWT-token och returnerar JWT-token
 router.post("/login", async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -55,8 +58,6 @@ router.post("/login", async (req, res) => {
             const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: `1h`});
             res.status(201).json({ messege: "Login successful", token: token });
         }
-
-
 
     } catch (error) {
         res.status(500).json({ error: "Server error" });

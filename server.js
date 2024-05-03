@@ -15,19 +15,17 @@ const jwt = require("jsonwebtoken");
 app.use(express.json());
 app.use(cors());
 
-
-
 //Välkomst meddelande om webbadress/api anropas
 app.use('/api', authRoutes);
 
 app.use("/api/protected", protected);
-
 
 //Startar servern
 app.listen(port, () => {
     console.log('Server is running on port: ' + port);
 });
 
+//Endast för att kontrollera om servern är igång
 app.get("/check", (req, res) => {
     res.status(200).json({ message: "Api-server is up and running."});
 });

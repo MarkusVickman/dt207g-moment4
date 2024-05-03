@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-// Skapa ett db-schema
+
+// mongoose-schema för cv-inlägg
 const WorkSchema = mongoose.Schema({
     username: {
         type: String,
@@ -30,7 +31,6 @@ const WorkSchema = mongoose.Schema({
         required: true
     }
 });
-
 
 // Skapa en model
 const WorkExperience = mongoose.model('Work_experience', WorkSchema);
